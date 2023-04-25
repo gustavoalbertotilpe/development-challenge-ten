@@ -1,0 +1,46 @@
+service: medcloud
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+  environment:
+    PG_DB: medcloud
+    PG_USER: root
+    PG_PASSWORD: asDfsAd1323
+    PG_PORT: 5432
+    PG_HOST: tilpe.c2yjptqcse6n.us-east-1.rds.amazonaws.com
+
+functions:
+  createPaciente:
+    handler: dist/controllers/apiPatients.createPaciente
+    events:
+      - http:
+          path: paciente
+          method: post
+  getPacientes:
+    handler: dist/controllers/apiPatients.getAll
+    events:
+      - http:
+          path: paciente
+          method: get
+  updatePaciente:
+    handler: dist/controllers/apiPatients.updatePaciente
+    events:
+      - http:
+          path: paciente/{id}
+          method: put
+  deletePaciente:
+    handler: dist/controllers/apiPatients.deletePaciente
+    events:
+      - http:
+          path: paciente/{id}
+          method: delete
+  findPacienteById:
+    handler: dist/controllers/apiPatients.findPacienteById
+    events:
+      - http:
+          path: paciente/{id}
+          method: get
+plugins:
+  - serverless-offline
